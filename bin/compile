@@ -64,22 +64,21 @@ CLANG_PATH=$CACHE_DIR/$(echo $CLANG_NAME_VERSION/clang*)
 
 export PATH="$SWIFT_PATH/usr/bin:$CLANG_PATH/bin:$PATH"
 
-cd $BUILD_DIR
 status "Building Package"
 swift build --configuration "$SWIFT_BUILD_CONFIGURATION" | indent
 
 # These should be statically linked, seems a swift bug
 status "Copying dynamic libraries"
-mkdir -p $BUILD_DIR/.swift-lib
-cp $SWIFT_PATH/usr/lib/swift/linux/*.so $BUILD_DIR/.swift-lib
-find $BUILD_DIR/.build/$SWIFT_BUILD_CONFIGURATION -name '*.so' -type f -exec cp {} $BUILD_DIR/.swift-lib \;
+mkdir -p /.swift-lib
+cp $SWIFT_PATH/usr/lib/swift/linux/*.so /.swift-lib
+find /.build/$SWIFT_BUILD_CONFIGURATION -name '*.so' -type f -exec cp {} /.swift-lib \;
 
 status "Copying binaries to 'bin'"
-mkdir -p $BUILD_DIR/.swift-bin
-find $BUILD_DIR/.build/$SWIFT_BUILD_CONFIGURATION ! -name '*.so' -type f -perm /a+x -exec cp {} $BUILD_DIR/.swift-bin \;
+mkdir -p /.swift-bin
+find .build/$SWIFT_BUILD_CONFIGURATION ! -name '*.so' -type f -perm /a+x -exec cp {} .swift-bin \;
 
 status "Cleaning up build files"
-rm -rf $BUILD_DIR/.build
+rm -rf /.build
 
 # Setup application environment
 PROFILE_PATH="$BUILD_DIR/.profile.d/swift.sh"
