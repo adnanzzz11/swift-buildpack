@@ -80,7 +80,7 @@ find $BUILD_DIR/.build/$SWIFT_BUILD_CONFIGURATION ! -name '*.so' -type f -perm /
 
 status "Cleaning up build files"
 rm -rf $BUILD_DIR/.build
-
+find /
 # Setup application environment
 PROFILE_PATH="$BUILD_DIR/.profile.d/swift.sh"
 mkdir -p $BUILD_DIR/.profile.d
