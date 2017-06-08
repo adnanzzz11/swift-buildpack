@@ -36,20 +36,20 @@ if File.exist? cache_path
   translated_uri = "file://#{file_path}"
 end
 
-echo "File exists"
+STDERR.puts "File exists"
 
 `curl -s #{translated_uri} -o #{file_location}`
 generated_md5 = Digest::MD5.file(file_location).hexdigest
 
-echo "md5 generated"
+STDERR.puts "md5 generated"
 debug "DEBUG: generated_md5 '#{generated_md5}'"
 puts file_location
 
 if dependency_md5 == generated_md5
-  echo "checked md5"
+  STDERR.puts "checked md5"
   exit 0
 else
-  echo "md5 does'nt match"
+  STDERR.puts "md5 does'nt match"
   FileUtils.rm(file_location)
   exit 3
 end
