@@ -49,7 +49,7 @@ if dependency_md5 == generated_md5
   STDERR.puts "checked md5"
   exit 0
 else
-  STDERR.puts "md5 does'nt match"
+  STDERR.puts "md5 does'nt match: '#{generated_md5}'"
   FileUtils.rm(file_location)
   exit 3
 end
